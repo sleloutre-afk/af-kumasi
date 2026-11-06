@@ -1,0 +1,48 @@
+// Habillage du BO aux couleurs de l'Alliance Française (rouge #da002e de la charte).
+//
+// Payload construit sa palette d'accent (liens, focus, zones de dépôt,
+// badges « publié »…) à partir de l'échelle --color-success-50 → 950 :
+// la remplacer par une déclinaison du rouge AF rebrande l'interface sans
+// toucher aux composants.
+@layer payload-default {
+  :root {
+    --color-success-50: #fdf2f4;
+    --color-success-100: #fbe3e8;
+    --color-success-150: #f9d9df;
+    --color-success-200: #f4bfca;
+    --color-success-250: #f2b3bf;
+    --color-success-300: #ec96a7;
+    --color-success-350: #e8798f;
+    --color-success-400: #e25a75;
+    --color-success-450: #de3c5c;
+    --color-success-500: #dc1e45;
+    --color-success-550: #da002e;
+    --color-success-600: #b8002a;
+    --color-success-650: #98111f;
+    --color-success-700: #861019;
+    --color-success-750: #740d10;
+    --color-success-800: #5c0a0d;
+    --color-success-850: #45080a;
+    --color-success-900: #2e0507;
+    --color-success-950: #1a171b;
+  }
+}
+
+// Logo de l'écran de connexion.
+@layer payload-default {
+  .afk-logo {
+    display: inline-flex;
+  }
+}
+
+// Menu latéral teinté, repère de la page active aux couleurs du site.
+@layer payload-default {
+  .nav {
+    background: linear-gradient(180deg, var(--theme-success-100), var(--theme-elevation-0) 70%);
+    border-right-color: var(--theme-success-250);
+  }
+
+  .nav__link-indicator {
+    background: var(--theme-success-500);
+  }
+}
