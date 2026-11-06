@@ -6,7 +6,7 @@ type Tone = 'red' | 'fu' | 'an' | 'bo' | 'gb' | 'bk'
 /**
  * Emplacement réservé à une photo ou une vidéo réelle, à fournir par l'Alliance
  * (blocs « Photo · … » / « Vidéo · … » des maquettes). Toute image réelle
- * portera un crédit (« DR » par défaut, charte AF).
+ * portera un crédit (charte AF) : CREDIT dans src/lib/site.ts.
  */
 export function Ph({
   cap,

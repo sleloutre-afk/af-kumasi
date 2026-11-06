@@ -1,13 +1,26 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { PageShell } from '@/components/PageShell'
 import { HeroWords } from '@/components/home/HeroWords'
 import { StatsBar } from '@/components/home/StatsBar'
 import { HomeAgenda } from '@/components/home/HomeAgenda'
+import { HeroVideoProvider, HeroVideoToggle } from '@/components/home/HeroVideo'
 import { ArrowIcon, CameraIcon, ChevronIcon } from '@/components/EventMedia'
 import { aLaUne, aVenir, carte, prochain } from '@/lib/evenements'
 import { ligneInfos, offresAccueil } from '@/lib/offres'
-import { CHIFFRES, ROUTES } from '@/lib/site'
+import { CHIFFRES, CREDIT, ROUTES } from '@/lib/site'
+import facade from '@/assets/photos/alliance-facade.jpg'
+import maison from '@/assets/photos/alliance-maison.jpg'
+import heroPoster from '@/assets/photos/hero-poster.jpg'
+import heroPosterMobile from '@/assets/photos/hero-poster-mobile.jpg'
+
+/**
+ * Vidéo d'ambiance du hero (muette, en boucle), dérivée de « Sources photos - videos/videos/full.mp4 » :
+ * H.264 1280×720 allégé (≈ 2 Mo) et version portrait pour mobile (406×720, ≈ 0,8 Mo).
+ * Les fichiers gardant leur nom, incrémenter « ?v= » à chaque remplacement (cache des navigateurs).
+ */
+const HERO_VIDEO = { src: '/videos/hero.mp4?v=1', srcMobile: '/videos/hero-mobile.mp4?v=1' }
 
 // La page dépend de la date du jour (événements à venir) : régénérée au plus toutes les heures.
 export const revalidate = 3600
@@ -33,14 +46,8 @@ export default function AccueilPage() {
     <PageShell>
       {/* ============ HERO ============ */}
       <section className="hero">
-        {/* Emplacement de la vidéo d'ambiance (à fournir) : formes animées en attendant. */}
-        <div className="hero-deco" aria-hidden="true">
-          <div className="hatch" style={{ position: 'absolute', inset: 0 }} />
-          <div className="hsq hsq-a" />
-          <div className="hsq hsq-b" />
-          <div className="hsq hsq-c" />
-          <div className="hsq hsq-d d-only" />
-        </div>
+        {/* Vidéo d'ambiance : image fixe d'abord, lecture selon l'écran et la connexion (HeroVideo). */}
+        <HeroVideoProvider src={HERO_VIDEO.src} srcMobile={HERO_VIDEO.srcMobile} poster={heroPoster} posterMobile={heroPosterMobile}>
         <HeroNet />
         <div className="hero-veil" aria-hidden="true" />
         <Header current="accueil" />
@@ -68,10 +75,7 @@ export default function AccueilPage() {
               Voir l’agenda
             </a>
           </div>
-          <p className="hero-vid m-only">
-            <PlayIcon size={14} />
-            Vidéo d’ambiance · version mobile allégée (poster + 8 s)
-          </p>
+          <HeroVideoToggle className="hero-vid m-only" />
         </div>
 
         <div className="wrap hero-foot d-only">
@@ -89,12 +93,12 @@ export default function AccueilPage() {
           ) : (
             <span />
           )}
-          <p className="hero-vid">
-            <PlayIcon size={16} />
-            Vidéo d’ambiance plein écran · boucle muette 15 s
-          </p>
+          <HeroVideoToggle className="hero-vid" />
         </div>
+        {/* Crédit de la vidéo d'ambiance (charte AF). */}
+        <span className="credit hero-credit">{CREDIT}</span>
         <div className="kente-fine" />
+        </HeroVideoProvider>
       </section>
 
       {/* ============ CHIFFRES CLÉS ============ */}
@@ -135,22 +139,41 @@ export default function AccueilPage() {
             Un lieu de langue et de culture, <i>au cœur de l’Ashanti</i>
           </h2>
         </div>
-        <div className="home-al-collage" aria-hidden="true">
-          <div className="hatch al-p1">
-            <span className="al-cap">
-              <CameraIcon size={18} />
-              <span className="d-only-i">Photo · Façade et jardin de l’Alliance</span>
-              <span className="m-only-i">Photo · Façade de l’Alliance</span>
-            </span>
-          </div>
-          <div className="hatch al-p2">
-            <span className="al-cap">
-              <CameraIcon size={18} />
-              <span className="d-only-i">Photo · L’équipe pédagogique</span>
-              <span className="m-only-i">Photo · L’équipe</span>
-            </span>
-          </div>
-          <div className="al-70">
+        <div className="home-al-collage">
+          {/* Photos posées dans leur cadre de couleur (gris-bleu, fuchsia) ; crédit dans la bande du bas. */}
+          <figure className="al-p1 al-frame hatch">
+            <div className="al-frame-img">
+              <Image
+                src={facade}
+                alt="Façade de l’Alliance Française de Kumasi : mur blanc, enseigne de l’Alliance et portail noir, drapeau français devant l’entrée."
+                fill
+                sizes="(max-width: 760px) 66vw, (max-width: 1360px) 32vw, 420px"
+                style={{ objectFit: 'cover', objectPosition: '0% 50%' }}
+                placeholder="blur"
+              />
+            </div>
+            <figcaption className="al-frame-cap al-cap-p1">
+              <CameraIcon size={14} />
+              {CREDIT}
+            </figcaption>
+          </figure>
+          <figure className="al-p2 al-frame hatch">
+            <div className="al-frame-img">
+              <Image
+                src={maison}
+                alt="Le bâtiment de l’Alliance : maison blanche aux grandes arcades vitrées, au milieu d’un jardin fleuri."
+                fill
+                sizes="(max-width: 760px) 44vw, (max-width: 1360px) 24vw, 320px"
+                style={{ objectFit: 'cover', objectPosition: '55% 50%' }}
+                placeholder="blur"
+              />
+            </div>
+            <figcaption className="al-frame-cap al-cap-p2">
+              <CameraIcon size={14} />
+              {CREDIT}
+            </figcaption>
+          </figure>
+          <div className="al-70" aria-hidden="true">
             <span className="serif">70</span>
             <span className="al-70-ans">ans</span>
             <span className="al-70-dates d-only">1956 — 2026</span>
@@ -432,14 +455,6 @@ function ServiceCard(props: { href: string; icon: React.ReactNode; titre: string
         <ChevronIcon color={props.red ? '#fff' : '#da002e'} />
       </span>
     </Link>
-  )
-}
-
-function PlayIcon({ size }: { size: number }) {
-  return (
-    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M8 5v14l11-7z" />
-    </svg>
   )
 }
 

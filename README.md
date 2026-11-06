@@ -41,6 +41,7 @@ même dossier).
   Coordonnées & horaires**.
 - Le site est purement informatif : pas de réservation, d’inscription ni de paiement en ligne.
 - Le logo est recomposé en police **à titre provisoire** : à remplacer par les fichiers officiels.
+- Toute image ou vidéo porte le crédit « © Alliance Française de Kumasi » (`CREDIT`, `src/lib/site.ts`).
 
 ## Back-office : sécurité
 

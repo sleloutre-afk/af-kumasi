@@ -2016,7 +2016,11 @@ textarea.inp {
 .hero-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(26, 23, 27, 0.88) 0%, rgba(26, 23, 27, 0.6) 42%, rgba(26, 23, 27, 0.05) 78%);
+  /* Voile du haut : garde l'en-tête lisible sur les parties claires de la vidéo. */
+  background:
+    linear-gradient(180deg, rgba(26, 23, 27, 0.75) 0, rgba(26, 23, 27, 0) 200px),
+    linear-gradient(90deg, rgba(26, 23, 27, 0.92) 0%, rgba(26, 23, 27, 0.72) 45%, rgba(26, 23, 27, 0.3) 85%),
+    rgba(26, 23, 27, 0.12);
 }
 .hero .hdr,
 .hero .mhdr {
@@ -2193,7 +2197,7 @@ textarea.inp {
     animation-duration: 20s;
   }
   .hero-veil {
-    background: linear-gradient(180deg, rgba(26, 23, 27, 0.35) 0%, rgba(26, 23, 27, 0.15) 30%, rgba(26, 23, 27, 0.9) 78%);
+    background: linear-gradient(180deg, rgba(26, 23, 27, 0.5) 0%, rgba(26, 23, 27, 0.3) 30%, rgba(26, 23, 27, 0.93) 75%);
   }
   .hero-b {
     flex: none;
@@ -4578,4 +4582,155 @@ textarea.inp {
   border-left: 4px solid var(--rouge);
   padding: 14px 18px;
   color: var(--bourgogne) !important;
+}
+
+/* Photo réelle dans le collage « L'Alliance » de l'accueil. */
+.al-photo {
+  margin: 0;
+  overflow: hidden;
+  background: var(--grisbleu);
+  padding: 0;
+}
+/* Crédit photo (charte AF : toute image porte un crédit — texte : CREDIT, src/lib/site.ts). */
+.credit {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background: rgba(26, 23, 27, 0.6);
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+}
+
+/* ---------- Vidéo d'ambiance du hero (accueil) ---------- */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  background: var(--bourgogne);
+}
+.hero-poster {
+  object-fit: cover;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero-video.on {
+  opacity: 1;
+}
+.hero-vid-btn {
+  border: 0;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 600;
+  min-height: 44px;
+}
+.hero-vid-btn:disabled {
+  cursor: default;
+}
+.hero-vid-btn:hover:not(:disabled) {
+  background: rgba(26, 23, 27, 0.8);
+  color: #fff;
+}
+@media (max-width: 760px) {
+  .hero-vid-btn {
+    align-self: flex-start;
+    min-height: 44px;
+  }
+}
+
+/* Crédit de la vidéo du hero : en bas à droite, juste au-dessus de la bande kente. */
+.hero-credit {
+  left: auto;
+  right: 16px;
+  bottom: 18px;
+  z-index: 3;
+}
+@media (max-width: 760px) {
+  .hero-credit {
+    bottom: 14px;
+  }
+}
+
+/* Crédit placé à droite (évite le carré « 70 ans » posé sur le bas gauche du cadre). */
+.credit-r {
+  left: auto;
+  right: 0;
+}
+/* Mobile : crédit en haut du cadre quand le carré « 70 ans » recouvre son bas. */
+@media (max-width: 760px) {
+  .credit-top-m {
+    top: 0;
+    bottom: auto;
+  }
+}
+
+/* ---------- Photos encadrées de la section « L'Alliance » (accueil) ----------
+   La photo est posée dans le cadre de couleur de la maquette (gris-bleu / fuchsia,
+   hachures), qui reste visible tout autour ; le crédit occupe la bande du bas. */
+.al-frame {
+  margin: 0;
+  padding: 0;
+  --ft: 20px;
+  --fx: 34px;
+  --fb: 38px;
+}
+.al-frame-img {
+  position: absolute;
+  top: var(--ft);
+  left: var(--fx);
+  right: var(--fx);
+  bottom: var(--fb);
+  overflow: hidden;
+}
+.al-frame-cap {
+  position: absolute;
+  bottom: 0;
+  height: var(--fb);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.al-cap-p1 {
+  left: var(--fx);
+}
+.al-cap-p2 {
+  right: var(--fx);
+}
+@media (max-width: 760px) {
+  .al-frame {
+    --ft: 10px;
+    --fx: 14px;
+    --fb: 26px;
+  }
+  .al-frame-cap {
+    font-size: 9px;
+    gap: 4px;
+  }
+  .al-frame-cap svg {
+    width: 11px;
+    height: 11px;
+  }
+  /* Le carré « 70 ans » et la 2e photo couvrent le bas des cadres → crédits dans la bande du haut. */
+  .al-frame.al-p1,
+  .al-frame.al-p2 {
+    --ft: 24px;
+    --fb: 12px;
+  }
+  .al-frame-cap {
+    top: 0;
+    bottom: auto;
+    height: 24px;
+  }
 }

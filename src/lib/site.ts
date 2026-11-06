@@ -31,6 +31,12 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:30
  */
 export const EN_AVAILABLE = false
 
+/**
+ * Crédit des images et vidéos du site (charte AF : toute image porte un crédit).
+ * Choix de Simon (6 nov. 2026) : « © Alliance Française de Kumasi » partout, à la place de « DR ».
+ */
+export const CREDIT = '© Alliance Française de Kumasi'
+
 /** Chiffres réels connus (voir CLAUDE.md) — ne rien inventer d'autre. */
 export const CHIFFRES = {
   fondation: '16 mai 1956',
